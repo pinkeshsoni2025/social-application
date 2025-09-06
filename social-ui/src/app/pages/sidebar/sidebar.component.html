@@ -1,0 +1,89 @@
+<div class="col-lg-4 sidebar-32">
+    <h1 class="h1-strong">Welcome, {{identity?.name}}</h1>
+</div>
+<div id="user-card" class="col-lg-4 panel panel-default pull-left">
+    <div class="avatar pull-left">
+        <img src="{{ url + 'get-image-user/' + identity?.image }}" *ngIf="identity?.image"/>
+        <img src="assets/images/user.png" width="200px" *ngIf="!identity?.image"/>
+    </div>
+    <div class="name-surname pull-left">
+        <a routerLink="['/perfil', identity._id]" class="username">
+            {{identity?.name + ' ' + identity?.surname}}
+        </a>
+        <p class="nickname" *ngIf="identity?.nick">
+            {{'('+identity?.nick + ')'}}
+        </p>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="stats" *ngIf="stats">
+        <div class="following-data">
+            <a routerLink="['/siguiendo', identity._id, 1]">
+                <span class="label-stats">
+                    Following
+                </span>
+                <span class="number-stats">
+                   <!--{{stats.following}}--> 
+                   {{stats?.following}}
+                </span>
+            </a>
+        </div>
+        <div class="following-data">
+            <a routerLink="['/seguidores', identity._id, 1]">
+                <span class="label-stats">
+                    Followers
+                </span>
+                <span class="number-stats">
+                    <!--{{stats.followed}} -->
+                    {{stats?.followed}}
+                </span>
+            </a>
+        </div>
+        <div class="following-data">
+            <a routerLink="['/perfil', identity._id]">
+                <span class="label-stats">
+                    Posts
+                </span>
+                <span class="number-stats">
+                    <!--{{stats.publications}}-->
+                    {{stats?.publications}}
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+<div id="new-publication" class="col-lg-4 pull-left panel panel-default">
+
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        Posted correctly
+    </div>
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        Could not publish
+    </div>
+
+    <form [formGroup]="addPublicationForm" (ngSubmit)="addPublication()" class="space-y-4">
+              <div class="form-group">
+                <label for="text" class="text-sm font-medium">What are you thinking today?</label>
+                <input
+                  id="text"
+                  type="text"
+                  formControlName="text"
+                  class="form-control"
+                  placeholder="Publication Text"
+                />
+              </div>
+              <p>
+                <label>Upload your photo</label>
+                <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)" class="form-control" />
+            </p>
+              <button type="submit" class="btn btn-primary" [disabled]="!addPublicationForm.valid">
+                Verify and Enable
+              </button>
+            </form>
+        
+</div>
+
+
+   
+  
+

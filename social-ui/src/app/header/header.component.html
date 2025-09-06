@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/home"><img src="assets/images/socia-icon.png" width="32px"
+          style="position: relative;bottom: 5px;" /></a>
+    </div>
+    <ul class="nav navbar-nav">
+      @if(isLoggedIn){
+      <li class=""><a routerLink="/home">Welcome {{identity?.name}},</a></li>
+      <li class="active"><a routerLink="/home">Home</a></li>
+      }
+
+      @if(!(isLoggedIn)){
+      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/register">Sign Up</a></li>
+      }
+      @if(isLoggedIn){
+      <li><button type="button" class="btn btn-danger" style="position: relative;top: 4px; left: 10px; padding: 10px;"
+          (click)="logout()">Logout</button></li>
+      }
+    </ul>
+  </div>
+</nav>

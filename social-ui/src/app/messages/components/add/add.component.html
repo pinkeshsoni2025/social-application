@@ -1,0 +1,66 @@
+<div class="col-lg-10">
+    <h3>
+        {{title}}
+    </h3>
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        Message sent.
+        See <a routerLink="['/mensajes/enviados']">sent messages</a>
+    </div>
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        Error sending message.
+    </div>
+
+    <form [formGroup]="addMessage" (ngSubmit)="onSubmit()"  class="col-lg-12">
+        <p>
+            <label>To:</label>
+            <!--<input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required />-->
+            <select *ngIf="follows" formControlName="receiver">
+                <option ngValue="null" disabled>Choose your profile</option>
+                <option *ngFor="let follow of follows" value="{{follow.user._id}}" >
+                {{follow.user.name + ' ' + follow.user.surname + ' ('+ follow.user.nick + ')' }}
+                </option>
+            </select> 
+            
+        </p>
+
+        <p>
+            <label>Message</label>
+            <!--<input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />-->
+            <input
+                id="text"
+                type="text"
+                formControlName="text"
+                class="form-input"
+                required
+            />
+            <span *ngIf="!text.valid && text.touched">Message is required</span>
+        </p>
+
+         <button
+          type="submit"
+          class="submit-button"
+          [disabled]="!addMessage.valid || isLoading"
+        >
+          <span *ngIf="!isLoading">Add</span>
+          <span *ngIf="isLoading">Adding Message...</span>
+        </button>
+    </form>
+    
+
+   <!-- <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+        <p>
+            <label>To:</label>
+            <select *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
+                <option *ngFor="let follow of follows" value="{{follow.user._id}}">
+                    {{follow.user.name + ' ' + follow.user.surname + ' ('+ follow.user.nick + ')' }}
+                </option>
+            </select>
+        </p>
+        <p>
+            <label>Message:</label>
+            <textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required></textarea>
+            <span *ngIf="!text.valid && text.touched">Message is required</span>
+        </p>
+        <input type="submit" value="{{title}}" class="btn btn-success" />
+    </form> -->
+</div>
